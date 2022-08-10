@@ -49,7 +49,7 @@ And reboot.
 
 Make sure the GPU and audio interface is using vfio-pci by running 
 ```bash
-sudo grub2-mkconfig -o /etc/grub2-efi.cfg
+lspci -v
 ```
 
 
