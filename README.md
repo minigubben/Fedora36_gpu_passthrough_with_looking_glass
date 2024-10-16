@@ -86,11 +86,11 @@ Add the following to the device section in the VM config. XML edit can be enable
 Now you must install the IVSHMEM drivers in windows. you can get them from https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/upstream-virtio/ and it needs to be version 0.1.161 or above.
 Open device manager and expand "System Devices" install new drivers for "PCI standard RAM Controller". You cant just select the driver folder directly but must instead browse and select the ivshmem.inf manually.
 
-Looking glass needs permissions to the shared memory file, you are supposed to be able to give this automatically acording to https://looking-glass.io/docs/B5.0.1/install/#client-install but i never got it working and just change permissions manually every time i reboot.
-To do this run 
-```bash
-sudo chown 107:1000 /dev/shm/looking-glass
-sudo chmod 664 /dev/shm/looking-glass
+Looking glass needs permissions to the shared memory file, to create this file with shared permissions on boot, put the following in /etc/tmpfiles.d/10-looking-glass.conf and replace username with your username.
+```
+# Type Path              Mode UID GID Age Argument
+
+f /dev/shm/looking-glass 0660 username qemu -
 ```
 
 To add mouse and keyboard support click add hardware inside your vm settings and select graphics->spice server. To prevent the spice server from breaking your passthrough you need to select the created video device and modify the XML to the following
